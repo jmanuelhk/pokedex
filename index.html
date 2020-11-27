@@ -15,62 +15,6 @@
 
     </div>
 
-    <!-- <script>
-
-        var URL_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
-
-        function getContent() {
-            var request = new XMLHttpRequest();
-
-            request.onload = function(){
-                if(request.status >=200 && request.status <300){
-                    //muestra el contenido que se solicita al servidor 
-                    console.log(JSON.parse(request.response.result))
-                } else {
-                    console.log("Hubo un error al procesar!!")
-                }
-            };
-
-            request.open("GET", URL_POKEMON, true);
-            request.send();
-        }
-    </script> -->
-
-    <!-- <script>
-        var URL_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
-
-        async function getContent(){
-            await fetch(URL_POKEMON)
-            .then(response => response.json())
-            .then(dataPokemon => {
-                dataPokemon.results.forEach(async function(pokemon){
-                    console.log(pokemon.name)
-                    //obtener imagenes pokemon
-                    let urlDatosPokemon = pokemon.url;
-                    await fetch(urlDatosPokemon)
-                    .then(response => response.json())
-                    .then(descPokemon => {
-                        let pokeImg = document.createElement("img")
-                            pokeImg.srcset = descPokemon.sprites.front_default
-                        console.log(descPokemon)
-
-                        let contenedorDatos = document.getElementById('poke-container')
-                        let pokeContainerName = document.createElement("div")
-
-                        let pokeName = document.createElement("h3")
-                            pokeName.innerText = pokemon.name
-
-                        pokeContainerName.append(pokeImg, pokeName)
-                        contenedorDatos.appendChild(pokeContainerName);
-                    })
-
-                    
-
-                    
-                })
-            })
-        }
-    </script> -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
