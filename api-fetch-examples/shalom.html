@@ -7,19 +7,31 @@
 <body>
 
     <div id="img-container">
-
+        <button onclick="getDataApi('batman')"> busqueda</button>
     </div>
+
     
     <script>
-        window.onload = getDataApi;
+        // window.onload = getDataApi("rapido");
         var IMG_API = "https://image.tmdb.org/t/p/w92"
         var URL_API = "https://api.themoviedb.org/3/search/movie?"
+        var URL_API_DISCOVER = "https://api.themoviedb.org/3/discover/movie?"
         var TOKEN_API = "api_key=2cd2ee4279676220e9a8de9ab98a65fb"
         var LANG_API = "&language=es"
         var QUERY_SEARCH = "&query="
+        var DATOBUSQUEDA = "villano"
 
-        async function getDataApi() {
-            await fetch(URL_API + TOKEN_API +LANG_API + QUERY_SEARCH + "nacho")
+        // https://api.themoviedb.org/3/discover/movie?
+        // api_key=<<api_key>>
+        //&language=en-US
+        //&sort_by=popularity.desc
+        //&include_adult=false
+        //&include_video=false
+        //&page=1
+
+        async function getDataApi(busquedaPelicula) {
+            //await fetch(URL_API_DISCOVER + TOKEN_API +LANG_API + "&sort_by=popularity.desc&include_adult=false&include_video=false&page=2" )
+            await fetch(URL_API + TOKEN_API +LANG_API + QUERY_SEARCH + busquedaPelicula )
                 .then(async response => await response.json())
                 .then(async data => {
                     console.log(data)
