@@ -7,27 +7,27 @@
 <body>
 
     <div id="img-container">
-
+        <button onclick="getDataApi('nature')"> buscar </button>
     </div>
     
     <script>
-        window.onload = getDataApi;
-        var VIN_API = "&vin=1FT8X3BT0BEA61538&format=json"
-        var URL_API = " https://api.carsxe.com/marketvalue?"
-        var TOKEN_API = "key=nti46sx0g_l76ne9puk_fyb0ku84z"
+        // window.onload = getDataApi;
+        var SEARCH = "&page=1&query="
+        var URL_API = "https://api.unsplash.com/search/photos"
+        var TOKEN_API = "?client_id=fZcbuSet74aEfW86V2K1kO-0JTIPBpIqpDvGYLbqsdA"
 
 
-        async function getDataApi() {
-            await fetch("https://private-anon-4a5147c3bd-carsapi1.apiary-mock.com/cars")
+        async function getDataApi(parametroBusqueda) {
+            await fetch(URL_API + TOKEN_API + SEARCH + parametroBusqueda)
                 .then(async response => await response.json())
                 .then(async data => {
                     console.log(data)
-                    for (let index = 0; index < 100; index++) {
-                    console.log(data[index])
+                    for (let index = 0; index < data.results.length; index++) {
+                    console.log(data.results[index])
 
                         let ContainerCar = document.createElement("div")
                         let CarImg = document.createElement("img")
-                        CarImg.srcset = data[index].img_url
+                        CarImg.srcset = data.results[index].urls.small
                         ContainerCar.append(CarImg)
 
                         let contenedor = document.getElementById('img-container')
