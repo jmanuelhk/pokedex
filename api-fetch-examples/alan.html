@@ -12,31 +12,18 @@
     
     <script>
         window.onload = getDataApi;
-        var IMG_API = "https://image.tmdb.org/t/p/w92"
-        var URL_API = "https://api.themoviedb.org/3/search/movie?"
-        var TOKEN_API = "api_key=2cd2ee4279676220e9a8de9ab98a65fb"
-        var LANG_API = "&language=es"
-        var QUERY_SEARCH = "&query="
+        var VIN_API = "&vin=1FT8X3BT0BEA61538&format=json"
+        var URL_API = " https://api.carsxe.com/marketvalue?"
+        var TOKEN_API = "key=nti46sx0g_l76ne9puk_fyb0ku84z"
+
 
         async function getDataApi() {
-            await fetch(URL_API + TOKEN_API +LANG_API + QUERY_SEARCH + "nacho")
+            await fetch("https://private-anon-4a5147c3bd-carsapi1.apiary-mock.com/cars")
                 .then(async response => await response.json())
                 .then(async data => {
                     console.log(data)
-                    for (let index = 0; index < data.results.length; index++) {
-                        let ContainerImg = document.createElement("div")
-                        let movieImg = document.createElement("img")
-                        movieImg.srcset = IMG_API + data.results[index].poster_path + "?" + TOKEN_API
-                        ContainerImg.append(movieImg)
+                    
 
-                        let contenedor = document.getElementById('img-container')
-                        contenedor.appendChild(ContainerImg)
-                    }
-                        
-                            //let contenedor = document.getElementById('img-container')
-                            //let movieImg = document.createElement("img")
-                            //movieImg.srcset= IMG_API + data.poster_path + "?" + TOKEN_API
-                            //contenedor.appendChild(movieImg)
                     
                 })
         }
