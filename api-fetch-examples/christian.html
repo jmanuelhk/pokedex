@@ -1,0 +1,40 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API </title>
+</head>
+
+<body>
+
+    <div id="img-container">
+        <button onclick="getDataApi('PHP')"> buscar </button>
+
+    </div>
+
+    <script>
+        // window.onload = getDataApi;
+        var URL_API_SEARCH = "https://www.etnassoft.com/api/v1/get/?book_title="
+        var URL_API = "https://www.etnassoft.com/api/v1/get/?category=all&num_items=50"
+
+        async function getDataApi(TEXT_SEARCH) {
+            await fetch(URL_API_SEARCH + TEXT_SEARCH)
+                .then(async response => await response.json())
+                .then(async data => {
+                    console.log(data)
+                    for (let index = 0; index < data.length; index++) {
+                        let ContainerImg = document.createElement("div")
+                        let bookImg = document.createElement("img")
+                        bookImg.srcset = data[index].cover
+                        ContainerImg.append(bookImg)
+
+                        let contenedor = document.getElementById('img-container')
+                        contenedor.appendChild(ContainerImg)
+                    }
+                })
+        }
+    </script>
+</body>
+
+</html>
