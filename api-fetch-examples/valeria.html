@@ -1,0 +1,42 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API </title>
+</head>
+<body>
+
+    <div id="img-container">
+        <button onclick="getDataApi('nature')"> buscar </button>
+    </div>
+    
+    <script>
+        // window.onload = getDataApi;
+        var SEARCH = "&page=1&query="
+        var URL_API = "https://api.unsplash.com/search/photos"
+        var TOKEN_API = "?client_id=fZcbuSet74aEfW86V2K1kO-0JTIPBpIqpDvGYLbqsdA"
+
+
+        async function getDataApi(parametroBusqueda) {
+            await fetch(URL_API + TOKEN_API + SEARCH + parametroBusqueda)
+                .then(async response => await response.json())
+                .then(async data => {
+                    console.log(data)
+                    for (let index = 0; index < data.results.length; index++) {
+                    console.log(data.results[index])
+
+                        let ContainerCar = document.createElement("div")
+                        let CarImg = document.createElement("img")
+                        CarImg.srcset = data.results[index].urls.small
+                        ContainerCar.append(CarImg)
+
+                        let contenedor = document.getElementById('img-container')
+                        contenedor.appendChild(ContainerCar)
+                    }
+
+                    
+                })
+        }
+    </script>
+</body>
+</html>

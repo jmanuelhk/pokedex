@@ -1,0 +1,57 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API </title>
+</head>
+<body>
+
+    <div id="img-container">
+        <button onclick="getDataApi('batman')"> busqueda</button>
+    </div>
+
+    
+    <script>
+        // window.onload = getDataApi("rapido");
+        var IMG_API = "https://image.tmdb.org/t/p/w92"
+        var URL_API = "https://api.themoviedb.org/3/search/movie?"
+        var URL_API_DISCOVER = "https://api.themoviedb.org/3/discover/movie?"
+        var TOKEN_API = "api_key=2cd2ee4279676220e9a8de9ab98a65fb"
+        var LANG_API = "&language=es"
+        var QUERY_SEARCH = "&query="
+        var DATOBUSQUEDA = "villano"
+
+        // https://api.themoviedb.org/3/discover/movie?
+        // api_key=<<api_key>>
+        //&language=en-US
+        //&sort_by=popularity.desc
+        //&include_adult=false
+        //&include_video=false
+        //&page=1
+
+        async function getDataApi(busquedaPelicula) {
+            //await fetch(URL_API_DISCOVER + TOKEN_API +LANG_API + "&sort_by=popularity.desc&include_adult=false&include_video=false&page=2" )
+            await fetch(URL_API + TOKEN_API +LANG_API + QUERY_SEARCH + busquedaPelicula )
+                .then(async response => await response.json())
+                .then(async data => {
+                    console.log(data)
+                    for (let index = 0; index < data.results.length; index++) {
+                        let ContainerImg = document.createElement("div")
+                        let movieImg = document.createElement("img")
+                        movieImg.srcset = IMG_API + data.results[index].poster_path + "?" + TOKEN_API
+                        ContainerImg.append(movieImg)
+
+                        let contenedor = document.getElementById('img-container')
+                        contenedor.appendChild(ContainerImg)
+                    }
+                        
+                            //let contenedor = document.getElementById('img-container')
+                            //let movieImg = document.createElement("img")
+                            //movieImg.srcset= IMG_API + data.poster_path + "?" + TOKEN_API
+                            //contenedor.appendChild(movieImg)
+                    
+                })
+        }
+    </script>
+</body>
+</html>
