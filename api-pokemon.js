@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", getContent);
+
 var URL_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
 
 async function getContent() {
@@ -10,7 +12,7 @@ async function getContent() {
                 await fetch(urlDatosPokemon)
                     .then(async response => await response.json())
                     .then(descPokemon => {
-                        
+
                         let contenedorDatos = document.getElementById('poke-container')
                         let pokeEnlaceId = document.createElement("a")
                         pokeEnlaceId.classList.add("img-hover-zoom--colorize");
