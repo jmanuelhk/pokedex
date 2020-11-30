@@ -1,0 +1,35 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API </title>
+</head>
+
+<body>
+
+    <div id="img-container">
+
+    </div>
+
+    <script>
+        window.onload = getDataApi;
+        // var VIN_API = "&vin=1FT8X3BT0BEA61538&format=json"
+        var URL_API = "https://www.etnassoft.com/api/v1/get/?category=all"
+            // var TOKEN_API = "key=nti46sx0g_l76ne9puk_fyb0ku84z"
+
+
+        async function getDataApi() {
+            await fetch(URL_API)
+                .then(async response => await response.json())
+                .then(async data => {
+                    console.log(data)
+
+
+
+                })
+        }
+    </script>
+</body>
+
+</html>
