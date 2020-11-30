@@ -9,24 +9,29 @@
 <body>
 
     <div id="img-container">
+        <button onclick="getDataApi('PHP')"> buscar </button>
 
     </div>
 
     <script>
-        window.onload = getDataApi;
-        // var VIN_API = "&vin=1FT8X3BT0BEA61538&format=json"
-        var URL_API = "https://www.etnassoft.com/api/v1/get/?category=all"
-            // var TOKEN_API = "key=nti46sx0g_l76ne9puk_fyb0ku84z"
+        // window.onload = getDataApi;
+        var URL_API_SEARCH = "https://www.etnassoft.com/api/v1/get/?book_title="
+        var URL_API = "https://www.etnassoft.com/api/v1/get/?category=all&num_items=50"
 
-
-        async function getDataApi() {
-            await fetch(URL_API)
+        async function getDataApi(TEXT_SEARCH) {
+            await fetch(URL_API_SEARCH + TEXT_SEARCH)
                 .then(async response => await response.json())
                 .then(async data => {
                     console.log(data)
+                    for (let index = 0; index < data.length; index++) {
+                        let ContainerImg = document.createElement("div")
+                        let bookImg = document.createElement("img")
+                        bookImg.srcset = data[index].cover
+                        ContainerImg.append(bookImg)
 
-
-
+                        let contenedor = document.getElementById('img-container')
+                        contenedor.appendChild(ContainerImg)
+                    }
                 })
         }
     </script>
