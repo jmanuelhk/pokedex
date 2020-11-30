@@ -1,16 +1,20 @@
+document.addEventListener("DOMContentLoaded", getContent);
+
 var URL_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
 
 async function getContent() {
     await fetch(URL_POKEMON)
         .then(async response => await response.json())
         .then(async dataPokemon => {
+            console.log(dataPokemon)
+            createPagination(dataPokemon.count)
             for (let index = 0; index < dataPokemon.results.length; index++) {
-                console.log(dataPokemon.results[index])
+
                 let urlDatosPokemon = dataPokemon.results[index].url;
                 await fetch(urlDatosPokemon)
                     .then(async response => await response.json())
                     .then(descPokemon => {
-                        
+
                         let contenedorDatos = document.getElementById('poke-container')
                         let pokeEnlaceId = document.createElement("a")
                         pokeEnlaceId.classList.add("img-hover-zoom--colorize");
@@ -19,7 +23,6 @@ async function getContent() {
                         pokeContainerName.classList.add('card', 'text-center');
 
                         let pokeImgDiv = document.createElement("div");
-                        // pokeImgDiv.classList.add("img-hover-zoom--colorize");
                         let pokeImg = document.createElement("img")
                         pokeImg.classList.add('card-img-top', 'img-fluid', 'rounded');
                         pokeImg.srcset = descPokemon.sprites.front_default
@@ -34,27 +37,6 @@ async function getContent() {
                         contenedorDatos.appendChild(pokeEnlaceId);
                     })
             }
-            // dataPokemon.results.forEach(async function (pokemon) {
-            //     console.log(pokemon.name)
-            //     //obtener imagenes pokemon
-            //     let urlDatosPokemon = pokemon.url;
-            //     await fetch(urlDatosPokemon)
-            //         .then(response => response.json())
-            //         .then(descPokemon => {
-            //             let pokeImg = document.createElement("img")
-            //             pokeImg.srcset = descPokemon.sprites.front_default
-            //             console.log(descPokemon)
-
-            //             let contenedorDatos = document.getElementById('poke-container')
-            //             let pokeContainerName = document.createElement("div")
-
-            //             let pokeName = document.createElement("h3")
-            //             pokeName.innerText = pokemon.name
-
-            //             pokeContainerName.append(pokeImg, pokeName)
-            //             contenedorDatos.appendChild(pokeContainerName);
-            //         })
-            // })
         })
 }
 
@@ -71,8 +53,36 @@ function createPokeData(pokeNm) {
     // pokeName.classList.add('card-text')
     // pokeName.innerText = `${pokeNm}`;
 
-
     pokeCard.append(pokeTitle)
 
     return pokeCard
 }
+var array_pagination;
+
+function createPagination(totalDatos) {
+    console.log(totalDatos, "ESTO ES EL TOTAL ")
+    var limit = 20;
+    array_pagination = totalDatos / limit;
+}
+
+$(function(array_pagination) {
+    (function(name) {
+        var container = $('#pagination-' + name);
+        container.pagination({
+            dataSource: function(done) {
+                console.log(array_pagination)
+
+                var result = [];
+                for (let index = 0; index < array_pagination; index++) {
+                    console.log(index)
+                    result.push(index)
+                }
+                done(result)
+            },
+
+            pageSize: 20,
+
+
+        })
+    })('pokemon');
+})
