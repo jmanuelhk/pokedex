@@ -57,32 +57,14 @@ function createPokeData(pokeNm) {
 
     return pokeCard
 }
-var array_pagination;
 
 function createPagination(totalDatos) {
+    var array_pagination;
     console.log(totalDatos, "ESTO ES EL TOTAL ")
     var limit = 20;
     array_pagination = totalDatos / limit;
+    return array_pagination;
 }
 
-$(function(array_pagination) {
-    (function(name) {
-        var container = $('#pagination-' + name);
-        container.pagination({
-            dataSource: function(done) {
-                console.log(array_pagination)
+var container = $('#pagination-pokemon');
 
-                var result = [];
-                for (let index = 0; index < array_pagination; index++) {
-                    console.log(index)
-                    result.push(index)
-                }
-                done(result)
-            },
-
-            pageSize: 20,
-
-
-        })
-    })('pokemon');
-})
