@@ -1,46 +1,31 @@
-document.addEventListener("DOMContentLoaded", getContent);
+const pokedex = document.getElementById('pokedex');
+const pokeCache = {}
 
-var URL_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
-
-async function getContent() {
-    await fetch(URL_POKEMON)
-        .then(async response => await response.json())
-        .then(async dataPokemon => {
-            console.log(dataPokemon)
-            createPagination(dataPokemon.count)
-            for (let index = 0; index < dataPokemon.results.length; index++) {
-
-                let urlDatosPokemon = dataPokemon.results[index].url;
-                await fetch(urlDatosPokemon)
-                    .then(async response => await response.json())
-                    .then(descPokemon => {
-
-                        let contenedorDatos = document.getElementById('poke-container')
-                        let pokeEnlaceId = document.createElement("a")
-                        pokeEnlaceId.classList.add("img-hover-zoom--colorize");
-                        pokeEnlaceId.href = "pokemon/information.html"
-                        let pokeContainerName = document.createElement("div")
-                        pokeContainerName.classList.add('card', 'text-center');
-
-                        let pokeImgDiv = document.createElement("div");
-                        let pokeImg = document.createElement("img")
-                        pokeImg.classList.add('card-img-top', 'img-fluid', 'rounded');
-                        pokeImg.srcset = descPokemon.sprites.front_default
-                        pokeImgDiv.append(pokeImg)
-
-                        let pokeName = createPokeData(dataPokemon.results[index].name);
-                        // let pokeName = document.createElement("h3")
-                        // pokeName.innerText = dataPokemon.results[index].name
-
-                        pokeContainerName.append(pokeImgDiv, pokeName)
-                        pokeEnlaceId.append(pokeContainerName)
-                        contenedorDatos.appendChild(pokeEnlaceId);
-                    })
-            }
-        })
+const fetchPokemon = async () => {
+    const URL_POKEMON = "https://pokeapi.co/api/v2/pokemon?limit=150";
+    
+    const res = await fetch(URL_POKEMON);
+    const data = await res.json();
+    const pokemon = data.results.map((result, index) => ({
+        ...result,
+        id: index+1,
+        image: `https://raw.githubusercontent.com/PokeApi/sprites/master/sprites/pokemon/${index+1}.png`
+    }));
+    displayPokemon(pokemon);
 }
 
-function createPokeData(pokeNm) {
+const displayPokemon = (pokemon) =>{
+    const pokemonHTMLString = pokemon
+    .map((pokemonData) => `
+        <li class="card" onclick="selectPokemon(${pokemonData.id})">
+            <img class="card-image" src="${pokemonData.image}"/>
+            <h2 class="card-title">${pokemonData.id}. ${pokemonData.name}</h2>
+        </li>
+    `).join('')
+    pokedex.innerHTML = pokemonHTMLString;
+}
+
+const createPokeData = (pokeNm) => {
 
     let pokeCard = document.createElement('div');
     pokeCard.classList.add('card-body');
@@ -58,13 +43,42 @@ function createPokeData(pokeNm) {
     return pokeCard
 }
 
-function createPagination(totalDatos) {
-    var array_pagination;
-    console.log(totalDatos, "ESTO ES EL TOTAL ")
-    var limit = 20;
-    array_pagination = totalDatos / limit;
-    return array_pagination;
+const selectPokemon = async (id) => {
+    console.log(id)
+    if (!pokeCache[id]) {
+        const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        const res = await fetch(url);
+        const pokedata = await res.json();
+        pokeCache[id] = pokedata;
+        displayPopup(pokedata);
+    }
+    
+    displayPopup(pokeCache[id]);
 }
 
-var container = $('#pagination-pokemon');
+const displayPopup = (pokedata) =>{
+    // console.log(pokedata);
+    const type = pokedata.types.map((type)=> type.type.name).join(', ');
+    const image = pokedata.sprites['front_default'];
+    const htmlString = `
+        <div class="popup">
+            <button id="closeBtn" onclick="closePopup()">Cerrar</button>
+            <div class="card">
+                <img class="card-image" src="${image}"/>
+                <h2 class="card-title">${pokedata.id}. ${pokedata.name}</h2>
+                <p><small>Height: </small>${pokedata.height} | <small>Weight: </small> ${pokedata.weight}| <small>Type: </small> ${type} </p>
+            </div>
+        </div>`
+    
+    console.log(htmlString);
 
+    pokedex.innerHTML = htmlString + pokedex.innerHTML;
+}
+
+const closePopup = () =>{
+    const popup = document.querySelector('.popup');
+    popup.parentElement.removeChild(popup);
+}
+
+
+fetchPokemon();
