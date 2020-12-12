@@ -1,22 +1,22 @@
 const pokedex = document.getElementById('pokedex');
 const pokeCache = {}
 
-const fetchPokemon = async () => {
+const fetchPokemon = async() => {
     const URL_POKEMON = "https://pokeapi.co/api/v2/pokemon?limit=150";
-    
+
     const res = await fetch(URL_POKEMON);
     const data = await res.json();
     const pokemon = data.results.map((result, index) => ({
         ...result,
-        id: index+1,
+        id: index + 1,
         image: `https://raw.githubusercontent.com/PokeApi/sprites/master/sprites/pokemon/${index+1}.png`
     }));
     displayPokemon(pokemon);
 }
 
-const displayPokemon = (pokemon) =>{
+const displayPokemon = (pokemon) => {
     const pokemonHTMLString = pokemon
-    .map((pokemonData) => `
+        .map((pokemonData) => `
         <li class="card" onclick="selectPokemon(${pokemonData.id})">
             <img class="card-image" src="${pokemonData.image}"/>
             <h2 class="card-title">${pokemonData.id}. ${pokemonData.name}</h2>
@@ -43,8 +43,8 @@ const createPokeData = (pokeNm) => {
     return pokeCard
 }
 
-const selectPokemon = async (id) => {
-    console.log(id)
+const selectPokemon = async(id) => {
+    // console.log(id)
     if (!pokeCache[id]) {
         const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
         const res = await fetch(url);
@@ -52,13 +52,13 @@ const selectPokemon = async (id) => {
         pokeCache[id] = pokedata;
         displayPopup(pokedata);
     }
-    
+
     displayPopup(pokeCache[id]);
 }
 
-const displayPopup = (pokedata) =>{
+const displayPopup = (pokedata) => {
     // console.log(pokedata);
-    const type = pokedata.types.map((type)=> type.type.name).join(', ');
+    const type = pokedata.types.map((type) => type.type.name).join(', ');
     const image = pokedata.sprites['front_default'];
     const htmlString = `
         <div class="popup">
@@ -69,13 +69,13 @@ const displayPopup = (pokedata) =>{
                 <p><small>Height: </small>${pokedata.height} | <small>Weight: </small> ${pokedata.weight}| <small>Type: </small> ${type} </p>
             </div>
         </div>`
-    
-    console.log(htmlString);
+
+    // console.log(htmlString);
 
     pokedex.innerHTML = htmlString + pokedex.innerHTML;
 }
 
-const closePopup = () =>{
+const closePopup = () => {
     const popup = document.querySelector('.popup');
     popup.parentElement.removeChild(popup);
 }
