@@ -9,31 +9,38 @@
     <div id="img-container">
 
     </div>
+
+    <button onclick="getDataApi('1FT8X3BT0BEA61538')"> buqueda por vin</button>
     
     <script>
-        window.onload = getDataApi;
-        var VIN_API = "&vin=1FT8X3BT0BEA61538&format=json"
+        // window.onload = getDataApi;
         var URL_API = " https://api.carsxe.com/marketvalue?"
-        var TOKEN_API = "key=nti46sx0g_l76ne9puk_fyb0ku84z"
+        var TOKEN_API = "api_key=nti46sx0g_l76ne9puk_fyb0ku84z"
+        var VIN_API = "&vin="
+        var FORMAT_API = "&format=json"
+
+        //1FT8X3BT0BEA61538
 
 
-        async function getDataApi() {
-            await fetch("https://private-anon-4a5147c3bd-carsapi1.apiary-mock.com/cars")
-                .then(async response => await response.json())
-                .then(async data => {
+
+         function getDataApi(textVin) {
+            //  fetch("https://api.edmunds.com/api/vehicle/v2/makes?fmt=json&"+ TOKEN_API)
+            //  fetch(URL_API + TOKEN_API + VIN_API + textVin + FORMAT_API)
+             fetch("https://private-anon-4a5147c3bd-carsapi1.apiary-mock.com/cars")
+                .then( response =>  response.json())
+                .then( data => {
                     console.log(data)
-                    for (let index = 0; index < 100; index++) {
-                    console.log(data[index])
+                    // for (let index = 0; index < 100; index++) {
+                    // console.log(data[index])
 
-                        let ContainerCar = document.createElement("div")
-                        let CarImg = document.createElement("img")
-                        CarImg.srcset = data[index].img_url
-                        ContainerCar.append(CarImg)
+                    //     let ContainerCar = document.createElement("div")
+                    //     let CarImg = document.createElement("img")
+                    //     CarImg.srcset = data[index].img_url
+                    //     ContainerCar.append(CarImg)
 
-                        let contenedor = document.getElementById('img-container')
-                        contenedor.appendChild(ContainerCar)
-                    }
-
+                    //     let contenedor = document.getElementById('img-container')
+                    //     contenedor.appendChild(ContainerCar)
+                    // }
                     
                 })
         }

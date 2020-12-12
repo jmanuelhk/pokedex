@@ -1,42 +1,169 @@
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API </title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>
+    <link rel="stylesheet" href="estilos/estilos.css">
+    <title>Portafolio - valeria</title>
+
+    <script src="/lib/jquery-1.12.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("input").focus(function () {
+                $(this).css("background-color", "#cccccc");
+            });
+            $("input").blur(function () {
+                $(this).css("background-color", "#ffffff");
+            });
+        });
+    </script>
 </head>
+
 <body>
 
-    <div id="img-container">
-        <button onclick="getDataApi('nature')"> buscar </button>
-    </div>
-    
-    <script>
-        // window.onload = getDataApi;
-        var SEARCH = "&page=1&query="
-        var URL_API = "https://api.unsplash.com/search/photos"
-        var TOKEN_API = "?client_id=fZcbuSet74aEfW86V2K1kO-0JTIPBpIqpDvGYLbqsdA"
+    Name: <input type="text" name="fullname"><br>
+    Email: <input type="text" name="email">
 
-
-        async function getDataApi(parametroBusqueda) {
-            await fetch(URL_API + TOKEN_API + SEARCH + parametroBusqueda)
-                .then(async response => await response.json())
-                .then(async data => {
-                    console.log(data)
-                    for (let index = 0; index < data.results.length; index++) {
-                    console.log(data.results[index])
-
-                        let ContainerCar = document.createElement("div")
-                        let CarImg = document.createElement("img")
-                        CarImg.srcset = data.results[index].urls.small
-                        ContainerCar.append(CarImg)
-
-                        let contenedor = document.getElementById('img-container')
-                        contenedor.appendChild(ContainerCar)
-                    }
-
-                    
-                })
-        }
     </script>
-</body>
+    </head>
+
+    <script src="/lib/jquery-1.12.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".ex .hide").click(function () {
+                $(this).parents(".ex").hide("slow");
+            });
+        });
+    </script>
+    <style>
+        div.ex {
+            background-color: #D43FF5;
+            padding: 7px;
+            border: solid 1px #c3c3c3;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <h3> contacto </h3>
+
+        <div class="ex">
+            <button class="hide">ocultame</button>
+            <p>contacto: valeria F.A <br>
+                985 124 7406<br>
+                MEXICO</p>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="contenedor">
+            <header>
+                <div class="logo">
+                    <h1>valeria</h1>
+                    <p>series y novelas coreanas</p>
+                </div>
+                <form action="">
+                    <input type="text" class="barra-busqueda" id="barra-busqueda" placeholder="Buscar">
+                </form>
+                <div class="categorias" id="categorias">
+                    <a href="#" class="activo">Todos</a>
+                    <a href="#">Diseños</a>
+                    <a href="#">Aplicaciones</a>
+                    <a href="#">Paginas Web</a>
+                    <a href="#">Video Juegos</a>
+
+                </div>
+            </header>
+
+            <section class="grid" id="grid">
+
+            </section>
+
+            <section class="overlay" id="overlay">
+                <div class="contenedor-img">
+                    <button id="btn-cerrar-popup"><i class="fas fa-times"></i></button>
+                    <img src="" alt="">
+                </div>
+                <p class="descripcion"></p>
+            </section>
+
+            <footer class="contenedor">
+                <div class="redes-sociales">
+                    <div class="contenedor-icono">
+                        <a href="http://www.twitter.com/" target="_blank" class="twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    <div class="contenedor-icono">
+                        <a href="http://www.facebook.com/" target="_blank" class="facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                    <div class="contenedor-icono">
+                        <a href="http://www.instagram.com" target="_blank" class="instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </footer>
+        </div>
+
+        <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
+        <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
+        <script src="main.js"></script>
+        <script>
+            let search_text = ""
+
+            const search = document.getElementById("barra-busqueda")
+
+            search.addEventListener('input', e => {
+                search_text = e.target.value;
+
+                getDataApi();
+            })
+
+            // window.onload = getDataApi;
+            var SEARCH = "&page=1&query="
+            var URL_API = "https://api.unsplash.com/search/photos"
+            var TOKEN_API = "?client_id=fZcbuSet74aEfW86V2K1kO-0JTIPBpIqpDvGYLbqsdA"
+
+
+            async function getDataApi() {
+                await fetch(URL_API + TOKEN_API + SEARCH + search_text)
+                    .then(async response => await response.json())
+                    .then(async data => {
+                        console.log(data)
+                        for (let index = 0; index < data.results.length; index++) {
+                            console.log(data.results[index])
+
+                            let ContainerCar = document.createElement("div")
+                            let CarImg = document.createElement("img")
+                            CarImg.srcset = data.results[index].urls.small
+                            ContainerCar.append(CarImg)
+
+                            let contenedor = document.getElementById('grid')
+                            contenedor.appendChild(ContainerCar)
+                        }
+
+
+                    })
+            }
+        </script>
+    </body>
+
 </html>
