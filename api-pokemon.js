@@ -1,3 +1,7 @@
+// https://www.cssscript.com/pagination-component-tui/  +
+// PARA LA PAGINACION DE LA PGINA WEB Y LA LISTA DE LOS ELEMENTOS
+
+
 const pokedex = document.getElementById('pokedex');
 const pokeCache = {}
 
