@@ -1,0 +1,41 @@
+.row {
+    background-color: aqua;
+    width: auto;
+    height: 5em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.col-lg, .col-md, .col-sm {
+    background-color: rgb(93, 161, 189);
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+@media (max-width: 767.98px) {
+    body {
+        background-color: purple;
+    }
+
+    .col-sm {
+        background-color: rgb(189, 93, 93);
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    body {
+        background-color: red;
+    }
+
+    .col-md {
+        background-color: rgb(60, 189, 43);
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+    }
+}

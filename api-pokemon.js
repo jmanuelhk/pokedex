@@ -6,7 +6,7 @@ const pokedex = document.getElementById('pokedex');
 const pokeCache = {}
 
 const fetchPokemon = async() => {
-    const URL_POKEMON = "https://pokeapi.co/api/v2/pokemon?limit=150";
+    const URL_POKEMON = "https://pokeapi.co/api/v2/pokemon?limit=40";
 
     const res = await fetch(URL_POKEMON);
     const data = await res.json();
@@ -29,23 +29,23 @@ const displayPokemon = (pokemon) => {
     pokedex.innerHTML = pokemonHTMLString;
 }
 
-const createPokeData = (pokeNm) => {
+// const createPokeData = (pokeNm) => {
 
-    let pokeCard = document.createElement('div');
-    pokeCard.classList.add('card-body');
+//     let pokeCard = document.createElement('div');
+//     pokeCard.classList.add('card-body');
 
-    let pokeTitle = document.createElement('h5');
-    pokeTitle.classList.add('card-title');
-    pokeTitle.innerText = `${pokeNm}`;
+//     let pokeTitle = document.createElement('h5');
+//     pokeTitle.classList.add('card-title');
+//     pokeTitle.innerText = `${pokeNm}`;
 
-    // let pokeName = document.createElement('p');
-    // pokeName.classList.add('card-text')
-    // pokeName.innerText = `${pokeNm}`;
+//     // let pokeName = document.createElement('p');
+//     // pokeName.classList.add('card-text')
+//     // pokeName.innerText = `${pokeNm}`;
 
-    pokeCard.append(pokeTitle)
+//     pokeCard.append(pokeTitle)
 
-    return pokeCard
-}
+//     return pokeCard
+// }
 
 const selectPokemon = async(id) => {
     // console.log(id)
@@ -64,11 +64,15 @@ const displayPopup = (pokedata) => {
     // console.log(pokedata);
     const type = pokedata.types.map((type) => type.type.name).join(', ');
     const image = pokedata.sprites['front_default'];
+    const image2 = pokedata.sprites['back_default'];
+    const image3 = pokedata.sprites['front_shiny'];
     const htmlString = `
         <div class="popup">
             <button id="closeBtn" onclick="closePopup()">Cerrar</button>
             <div class="card">
                 <img class="card-image" src="${image}"/>
+                <img class="card-image" src="${image2}"/>
+                <img class="card-image" src="${image3}"/>
                 <h2 class="card-title">${pokedata.id}. ${pokedata.name}</h2>
                 <p><small>Height: </small>${pokedata.height} | <small>Weight: </small> ${pokedata.weight}| <small>Type: </small> ${type} </p>
             </div>
