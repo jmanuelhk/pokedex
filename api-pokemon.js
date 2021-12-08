@@ -10,10 +10,11 @@ const fetchPokemon = async() => {
 
     const res = await fetch(URL_POKEMON);
     const data = await res.json();
+    console.log(data)
     const pokemon = data.results.map((result, index) => ({
         ...result,
         id: index + 1,
-        image: `https://raw.githubusercontent.com/PokeApi/sprites/master/sprites/pokemon/${index+1}.png`
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index+1}.png`
     }));
     displayPokemon(pokemon);
 }
@@ -48,20 +49,21 @@ const displayPokemon = (pokemon) => {
 // }
 
 const selectPokemon = async(id) => {
-    // console.log(id)
     if (!pokeCache[id]) {
+        // console.log(id)
         const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
         const res = await fetch(url);
         const pokedata = await res.json();
         pokeCache[id] = pokedata;
-        displayPopup(pokedata);
+        return displayPopup(pokedata);
     }
 
-    displayPopup(pokeCache[id]);
+    console.log(id)
+    return displayPopup(pokeCache[id]);
 }
 
 const displayPopup = (pokedata) => {
-    // console.log(pokedata);
+    console.log(pokedata);
     const type = pokedata.types.map((type) => type.type.name).join(', ');
     const image = pokedata.sprites['front_default'];
     const image2 = pokedata.sprites['back_default'];
@@ -78,15 +80,45 @@ const displayPopup = (pokedata) => {
             </div>
         </div>`
 
-    // console.log(htmlString);
 
-    pokedex.innerHTML = htmlString + pokedex.innerHTML;
+    pokedex.innerHTML = pokedex.innerHTML + htmlString;
 }
 
 const closePopup = () => {
-    const popup = document.querySelector('.popup');
-    popup.parentElement.removeChild(popup);
+    // const popup = document.querySelector('.popup');
+    // popup.parentElement.removeChild(popup);
+    const searchPopupModal = document.querySelector('.popup');
+    searchPopupModal.parentNode.removeChild(searchPopupModal);
 }
 
+function between(min, max) {  
+  return Math.floor(
+    Math.random() * (max - min) + min
+  )
+}
 
-fetchPokemon();
+// Example:
+const addPokemonList = async(pokeId) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokeId}`;
+    const res = await fetch(url);
+    const pokedata = await res.json();
+    const pokemon = {
+        name: pokedata.name,
+        id: pokeId,
+        image: pokedata.sprites.other["official-artwork"].front_default
+    };
+    console.log(pokedata)
+    console.log(pokemon)
+    // return displayPopup(pokedata);
+}
+
+function selectPokemonRandom(listRange){
+    var pokemonList = [];
+    for (let index = 0; index < listRange; index++) {
+        var pokeNumber = between(1, 1118)
+        addPokemonList(pokeNumber)
+        console.log(pokeNumber)
+    }
+}
+selectPokemonRandom(10)
+// fetchPokemon();
